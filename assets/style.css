@@ -1,0 +1,28 @@
+/* * {
+	border: solid 1px red;
+} */
+
+body {
+	margin: 0%;
+	background-color: hsl(0, 0%, 15%);
+	color: hsl(0, 0%, 80%);
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+header {
+	background-color: hsl(0, 0%, 80%);
+	color: hsl(0, 0%, 15%);
+	display: flex;
+	justify-content: space-between;
+}
+
+header button {
+	background-color: hsl(0, 0%, 20%);
+	color: hsl(0, 0%, 80%);
+	border: none;
+	padding: 0 2%;
+}
+
+header div {
+	padding-right: 2%;
+}
