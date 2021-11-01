@@ -56,3 +56,6 @@ main button {
 	border: none;
 	padding: 15px
 }
+.hidden{
+	display:none
+}
