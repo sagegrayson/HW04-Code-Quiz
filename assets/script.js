@@ -1,34 +1,15 @@
-// PSEUDO =======================================
-// On webpage load
-// 		Build header with high score button and timer
-// 		Show start button and code Quiz
-// On hsBbutton click
-// 		Display out of line box [build an close button]
-// 		check if local storage has scores
-// 		Yes: Load high score local storage
-// 		No: display no local high scores
-// On startbutton click - start quiz
-// Quiz functionality
-//		hide start screen
-// 		show question 1
-// 		on answer click
-// 			check which button was clicked
-// 			check if that button is true
-// 			if yes - add time and load next question
-// 			if no - remove time and load next question
-// 		redraw questions with new text buttons
-// When time runs out or when quiz number is greater than the number of questions
-// end quiz - show final time / questions left
-// do math to take final score
-// have text field to enter name
-// combine into object and save to local storage / high scores
-
 console.log("script.js loaded");
 // DEPENDENCIES =================================
 var startScreen = document.getElementById("start-screen");
 var startButton = document.getElementById("start-button");
 var timeDisplay = document.getElementById("time-display");
 var questionDiv = document.getElementById("question-div");
+
+var qTxt = document.getElementById("q-text");
+var ansA = document.getElementById("ans-a");
+var ansB = document.getElementById("ans-b");
+var ansC = document.getElementById("ans-c");
+var ansD = document.getElementById("ans-d");
 
 // DATA =========================================
 const questions = [
@@ -79,24 +60,53 @@ const questions = [
 	},
 ];
 
+var questionNum = 0;
+
 // FUNCTIONS ====================================
-// main game function
-function quizMain() {
-	quizStart();
-	countdown();
-}
+
 // start game
 function quizStart() {
 	startScreen.classList.add("hidden");
 	questionDiv.classList.remove("hidden");
+	nextQuestion();
 }
 
 // next question
 function nextQuestion() {
+	if (questionNum > questions.length - 1) {
+		endGame();
+	} else {
+		var currentQuestion = questions[questionNum].question;
+		var currentAnswers = questions[questionNum].answers;
+		console.log(questionNum);
+		console.log(currentAnswers);
+		qTxt.innerHTML = currentQuestion;
+		ansA.innerHTML = currentAnswers[0].aText;
+		ansB.innerHTML = currentAnswers[1].aText;
+		ansC.innerHTML = currentAnswers[2].aText;
+		ansD.innerHTML = currentAnswers[3].aText;
+		ansA.dataset.correct = currentAnswers[0].correct;
+		ansB.dataset.correct = currentAnswers[1].correct;
+		ansC.dataset.correct = currentAnswers[2].correct;
+		ansD.dataset.correct = currentAnswers[3].correct;
+	}
 }
 
+// question check
+function checkAnswer(event) {
+	console.log(event.target.dataset.correct);
+	if (event.target.dataset.correct === "true") {
+		questionNum++;
+		nextQuestion();
+	} else {
+	}
+}
 
 // end game
+function endGame() {
+	console.log("game end");
+}
+
 // show scores
 // play again
 
@@ -116,6 +126,10 @@ function countdown() {
 }
 
 // USER INTERACTIONS ============================
-startButton.addEventListener("click", quizMain);
+startButton.addEventListener("click", quizStart);
+ansA.addEventListener("click", checkAnswer);
+ansB.addEventListener("click", checkAnswer);
+ansC.addEventListener("click", checkAnswer);
+ansD.addEventListener("click", checkAnswer);
 
 // INITIALIZATION ===============================
