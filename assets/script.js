@@ -5,15 +5,18 @@ var startButton = document.getElementById("start-button");
 var timeDisplay = document.getElementById("time-display");
 var questionDiv = document.getElementById("question-div");
 
+var timer = document.getElementById("timer");
+
 var endScreen = document.getElementById("end-screen");
 var endScore = document.getElementById("end-score");
-
 
 var qTxt = document.getElementById("q-text");
 var ansA = document.getElementById("ans-a");
 var ansB = document.getElementById("ans-b");
 var ansC = document.getElementById("ans-c");
 var ansD = document.getElementById("ans-d");
+
+numLocalStorage = localStorage.length;
 
 // DATA =========================================
 const questions = [
@@ -75,6 +78,7 @@ function quizStart() {
 	startScreen.classList.add("hidden");
 	questionDiv.classList.remove("hidden");
 	nextQuestion();
+	countdown();
 }
 
 // next question
@@ -110,19 +114,34 @@ function checkAnswer(event) {
 
 // end game
 function endGame() {
-	console.log("game end");
 	questionDiv.classList.add("hidden");
 	endScreen.classList.remove("hidden");
-	endScore.textContent = timeLeft
+
+	timer.classList.add("hidden");
+	var finalScore = timeLeft;
+	endScore.textContent = finalScore;
+
+	timeLeft = 0;
+
+	var initials = prompt("Initials:");
+	localStorage.setItem(
+		"Score " + numLocalStorage,
+		JSON.stringify({ initials: initials, score: finalScore })
+	);
+
+	showScores();
 }
 
 // show scores
+function showScores() {
+localStorage.forEach(element => {
+	
+});	
+}
 // play again
 
 // countdown timer
 function countdown() {
-
-
 	var timeCounter = setInterval(function () {
 		if (timeLeft > 0) {
 			timeDisplay.textContent = timeLeft;
