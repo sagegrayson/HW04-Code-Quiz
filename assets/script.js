@@ -16,7 +16,8 @@ var ansB = document.getElementById("ans-b");
 var ansC = document.getElementById("ans-c");
 var ansD = document.getElementById("ans-d");
 
-numLocalStorage = localStorage.length;
+var scoreScreen = document.getElementById("score-screen");
+var scoreList = document.getElementById("score-list");
 
 // DATA =========================================
 const questions = [
@@ -70,6 +71,8 @@ const questions = [
 var questionNum = 0;
 
 var timeLeft = 10;
+
+var numLocalStorage = localStorage.length;
 
 // FUNCTIONS ====================================
 
@@ -125,7 +128,7 @@ function endGame() {
 
 	var initials = prompt("Initials:");
 	localStorage.setItem(
-		"Score " + numLocalStorage,
+		"Score" + numLocalStorage,
 		JSON.stringify({ initials: initials, score: finalScore })
 	);
 
@@ -134,9 +137,15 @@ function endGame() {
 
 // show scores
 function showScores() {
-localStorage.forEach(element => {
-	
-});	
+	let scores = [];
+	for (var i = 0; i < localStorage.length; i++) {
+		scores.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+		let initials = scores[i].initials;
+		let score = scores[i].score;
+		var entry = document.createElement("li");
+		entry.textContent = initials + ": " + score;
+		scoreList.appendChild(entry);
+	}
 }
 // play again
 
@@ -161,3 +170,4 @@ ansC.addEventListener("click", checkAnswer);
 ansD.addEventListener("click", checkAnswer);
 
 // INITIALIZATION ===============================
+showScores();
