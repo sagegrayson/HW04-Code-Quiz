@@ -16,10 +16,16 @@ var ansB = document.getElementById("ans-b");
 var ansC = document.getElementById("ans-c");
 var ansD = document.getElementById("ans-d");
 
+var scoresButton = document.getElementById("scores-button");
+
 var scoreScreen = document.getElementById("score-screen");
 var scoreList = document.getElementById("score-list");
 
+var homeButton = document.getElementById("home-button");
+
 // DATA =========================================
+
+// TODO: Change questions 
 const questions = [
 	{
 		question: "1 - A",
@@ -112,6 +118,8 @@ function checkAnswer(event) {
 		questionNum++;
 		nextQuestion();
 	} else {
+		// TODO: Make incorrect answer take time off
+		// TODO: Red fade?
 	}
 }
 
@@ -131,12 +139,12 @@ function endGame() {
 		"Score" + numLocalStorage,
 		JSON.stringify({ initials: initials, score: finalScore })
 	);
-
+	addScore();
 	showScores();
 }
 
-// show scores
-function showScores() {
+// add score
+function addScore() {
 	let scores = [];
 	for (var i = 0; i < localStorage.length; i++) {
 		scores.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
@@ -147,7 +155,24 @@ function showScores() {
 		scoreList.appendChild(entry);
 	}
 }
-// play again
+
+// show scores
+function showScores() {
+	startScreen.classList.add("hidden");
+	endScreen.classList.add("hidden");
+	scoreScreen.classList.remove("hidden");
+}
+// go home, reset game
+function goHome() {
+	scoreScreen.classList.add("hidden");
+	startScreen.classList.remove("hidden");
+	timer.classList.remove("hidden");
+
+	timeLeft = 10;
+	questionNum = 0;
+
+	timeDisplay.textContent = timeLeft;
+}
 
 // countdown timer
 function countdown() {
@@ -158,6 +183,7 @@ function countdown() {
 		} else {
 			timeDisplay.textContent = 0;
 			clearInterval(timeCounter);
+			// TODO: When time reaches 0, end game.
 		}
 	}, 1000);
 }
@@ -168,6 +194,7 @@ ansA.addEventListener("click", checkAnswer);
 ansB.addEventListener("click", checkAnswer);
 ansC.addEventListener("click", checkAnswer);
 ansD.addEventListener("click", checkAnswer);
+homeButton.addEventListener("click", goHome);
+scoresButton.addEventListener("click", showScores);
 
 // INITIALIZATION ===============================
-showScores();
