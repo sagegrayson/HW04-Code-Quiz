@@ -5,6 +5,10 @@ var startButton = document.getElementById("start-button");
 var timeDisplay = document.getElementById("time-display");
 var questionDiv = document.getElementById("question-div");
 
+var endScreen = document.getElementById("end-screen");
+var endScore = document.getElementById("end-score");
+
+
 var qTxt = document.getElementById("q-text");
 var ansA = document.getElementById("ans-a");
 var ansB = document.getElementById("ans-b");
@@ -62,6 +66,8 @@ const questions = [
 
 var questionNum = 0;
 
+var timeLeft = 10;
+
 // FUNCTIONS ====================================
 
 // start game
@@ -78,13 +84,14 @@ function nextQuestion() {
 	} else {
 		var currentQuestion = questions[questionNum].question;
 		var currentAnswers = questions[questionNum].answers;
-		console.log(questionNum);
-		console.log(currentAnswers);
+
 		qTxt.innerHTML = currentQuestion;
+
 		ansA.innerHTML = currentAnswers[0].aText;
 		ansB.innerHTML = currentAnswers[1].aText;
 		ansC.innerHTML = currentAnswers[2].aText;
 		ansD.innerHTML = currentAnswers[3].aText;
+
 		ansA.dataset.correct = currentAnswers[0].correct;
 		ansB.dataset.correct = currentAnswers[1].correct;
 		ansC.dataset.correct = currentAnswers[2].correct;
@@ -94,7 +101,6 @@ function nextQuestion() {
 
 // question check
 function checkAnswer(event) {
-	console.log(event.target.dataset.correct);
 	if (event.target.dataset.correct === "true") {
 		questionNum++;
 		nextQuestion();
@@ -105,6 +111,9 @@ function checkAnswer(event) {
 // end game
 function endGame() {
 	console.log("game end");
+	questionDiv.classList.add("hidden");
+	endScreen.classList.remove("hidden");
+	endScore.textContent = timeLeft
 }
 
 // show scores
@@ -112,7 +121,7 @@ function endGame() {
 
 // countdown timer
 function countdown() {
-	var timeLeft = 10;
+
 
 	var timeCounter = setInterval(function () {
 		if (timeLeft > 0) {
