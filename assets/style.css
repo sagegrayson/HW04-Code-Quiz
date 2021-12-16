@@ -54,8 +54,41 @@ main button {
 	background-color: hsl(0, 0%, 50%);
 	color: hsl(0, 0%, 15%);
 	border: none;
-	padding: 15px
+	padding: 15px;
 }
-.hidden{
-	display:none
+
+.hidden {
+	display: none;
+}
+
+@keyframes fadeR {
+	0% {
+		background-color: hsl(0, 0%, 15%);
+	}
+	10% {
+		background-color: hsl(9, 73%, 39%);
+	}
+	100% {
+		background-color: hsl(0, 0%, 15%);
+	}
+}
+@keyframes fadeG {
+	0% {
+		background-color: hsl(0, 0%, 15%);
+	}
+	10% {
+		background-color: hsl(127, 73%, 39%);
+	}
+	100% {
+		background-color: hsl(0, 0%, 15%);
+	}
+}
+
+
+.wrong-ans {
+	animation: fadeR 1s ease-in-out;
+}
+
+.correct-ans{
+	animation: fadeG 1s ease-in-out;
 }

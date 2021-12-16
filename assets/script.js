@@ -1,3 +1,5 @@
+// TODO: Sort High Scores or rename button
+
 console.log("script.js loaded");
 // DEPENDENCIES =================================
 var startScreen = document.getElementById("start-screen");
@@ -23,63 +25,65 @@ var scoreList = document.getElementById("score-list");
 
 var homeButton = document.getElementById("home-button");
 
+var body = document.getElementById("body");
+
 // DATA =========================================
 
-// TODO: Change questions 
 const questions = [
 	{
-		question: "1 - A",
+		question: "What HTML tag is Javascript placed in?",
 		answers: [
-			{ aText: "A", correct: true },
-			{ aText: "B", correct: false },
-			{ aText: "C", correct: false },
-			{ aText: "D", correct: false },
+			{ aText: "script", correct: true },
+			{ aText: "scripting", correct: false },
+			{ aText: "js", correct: false },
+			{ aText: "javascript", correct: false },
 		],
 	},
 	{
-		question: "2 - B",
+		question: "which of these is the OR operator",
 		answers: [
-			{ aText: "A", correct: false },
-			{ aText: "B", correct: true },
-			{ aText: "C", correct: false },
-			{ aText: "D", correct: false },
+			{ aText: "&&", correct: false },
+			{ aText: "||", correct: true },
+			{ aText: "??", correct: false },
+			{ aText: "**", correct: false },
 		],
 	},
 	{
-		question: "3 - C",
+		question: "Which of these test strict equality?",
 		answers: [
-			{ aText: "A", correct: false },
-			{ aText: "B", correct: false },
-			{ aText: "C", correct: true },
-			{ aText: "D", correct: false },
+			{ aText: "=", correct: false },
+			{ aText: "==", correct: false },
+			{ aText: "===", correct: true },
+			{ aText: "====", correct: false },
 		],
 	},
 	{
-		question: "4 - D",
+		question: "What does NaN stand for?",
 		answers: [
-			{ aText: "A", correct: false },
-			{ aText: "B", correct: false },
-			{ aText: "C", correct: false },
-			{ aText: "D", correct: true },
+			{ aText: "National Action Network", correct: false },
+			{ aText: "Null and Not", correct: false },
+			{ aText: "Neigborhood Aware Network ", correct: false },
+			{ aText: "Not a Number", correct: true },
 		],
 	},
 	{
-		question: "5 - A",
+		question: "Which of these is not a scope in JS?",
 		answers: [
-			{ aText: "A", correct: true },
-			{ aText: "B", correct: false },
-			{ aText: "C", correct: false },
-			{ aText: "D", correct: false },
+			{ aText: "Universal Scope", correct: true },
+			{ aText: "Global Scope", correct: false },
+			{ aText: "Function Scope", correct: false },
+			{ aText: "Block Scope", correct: false },
 		],
 	},
 ];
 
 var questionNum = 0;
 
-var timeLeft = 10;
+var timeLeft = 59;
 
 var numLocalStorage = localStorage.length;
 
+var scores = [];
 // FUNCTIONS ====================================
 
 // start game
@@ -87,11 +91,13 @@ function quizStart() {
 	startScreen.classList.add("hidden");
 	questionDiv.classList.remove("hidden");
 	nextQuestion();
-	countdown();
+	startCountdown();
 }
 
 // next question
 function nextQuestion() {
+	// body.classList.remove("correct-ans")
+
 	if (questionNum > questions.length - 1) {
 		endGame();
 	} else {
@@ -116,38 +122,48 @@ function nextQuestion() {
 function checkAnswer(event) {
 	if (event.target.dataset.correct === "true") {
 		questionNum++;
+		body.classList.add("correct-ans");
+		setTimeout(() => {
+			body.classList.remove("correct-ans");
+		}, 1000);
 		nextQuestion();
 	} else {
-		// TODO: Make incorrect answer take time off
-		// TODO: Red fade?
+		timeLeft = timeLeft - 5;
+		body.classList.add("wrong-ans");
+		setTimeout(() => {
+			body.classList.remove("wrong-ans");
+		}, 1000);
 	}
 }
 
 // end game
 function endGame() {
+	numLocalStorage = localStorage.length;
+	stopCountdown();
 	questionDiv.classList.add("hidden");
 	endScreen.classList.remove("hidden");
-
+	var finalScore;
+	if (timeLeft < 0) {
+		finalScore = 0;
+	} else {
+		finalScore = timeLeft;
+	}
 	timer.classList.add("hidden");
-	var finalScore = timeLeft;
 	endScore.textContent = finalScore;
+	var initials = prompt("Initials:");
 
 	timeLeft = 0;
-
-	var initials = prompt("Initials:");
-	localStorage.setItem(
-		"Score" + numLocalStorage,
-		JSON.stringify({ initials: initials, score: finalScore })
-	);
-	addScore();
+	newScore(initials, finalScore);
 	showScores();
 }
 
 // add score
-function addScore() {
-	let scores = [];
+function buildScores() {
 	for (var i = 0; i < localStorage.length; i++) {
 		scores.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+	}
+
+	for (let i = 0; i < scores.length; i++) {
 		let initials = scores[i].initials;
 		let score = scores[i].score;
 		var entry = document.createElement("li");
@@ -156,36 +172,59 @@ function addScore() {
 	}
 }
 
-// show scores
+function newScore(init, num) {
+	localStorage.setItem(
+		"Score" + numLocalStorage,
+		JSON.stringify({ initials: init, score: num })
+	);
+
+	let initials = init;
+	let score = num;
+	var entry = document.createElement("li");
+	entry.textContent = initials + ": " + score;
+	scoreList.appendChild(entry);
+}
+
 function showScores() {
 	startScreen.classList.add("hidden");
 	endScreen.classList.add("hidden");
 	scoreScreen.classList.remove("hidden");
 }
+
 // go home, reset game
 function goHome() {
 	scoreScreen.classList.add("hidden");
 	startScreen.classList.remove("hidden");
 	timer.classList.remove("hidden");
 
-	timeLeft = 10;
+	timeLeft = 59;
 	questionNum = 0;
 
 	timeDisplay.textContent = timeLeft;
 }
 
 // countdown timer
+var timeCounter;
+
 function countdown() {
-	var timeCounter = setInterval(function () {
+	timeCounter = setInterval(function () {
 		if (timeLeft > 0) {
 			timeDisplay.textContent = timeLeft;
 			timeLeft--;
 		} else {
 			timeDisplay.textContent = 0;
 			clearInterval(timeCounter);
-			// TODO: When time reaches 0, end game.
+			endGame();
 		}
 	}, 1000);
+}
+
+function startCountdown() {
+	countdown();
+}
+
+function stopCountdown() {
+	clearInterval(timeCounter);
 }
 
 // USER INTERACTIONS ============================
@@ -198,3 +237,5 @@ homeButton.addEventListener("click", goHome);
 scoresButton.addEventListener("click", showScores);
 
 // INITIALIZATION ===============================
+buildScores();
+console.log(scores);
