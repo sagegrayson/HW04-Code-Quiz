@@ -1,10 +1,11 @@
 
-# HW4 Code Quiz
+# HW4 Code Quiz [![Do WTF You Want To](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](http://www.wtfpl.net/)
 ## Description
-[![Do WTF You Want To](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](http://www.wtfpl.net/)
+![screenshot](assets/screenshot.png)
 
 This is a JS quiz built using HTML, CSS, and Javascript.
-![screenshot](assets/screenshot.png)
+
+
 
 ## Contents
 - [Installation](#installation)

@@ -1,4 +1,5 @@
 // TODO: Sort High Scores or rename button
+// TODO: highscores while in quiz
 
 console.log("script.js loaded");
 // DEPENDENCIES =================================
@@ -9,8 +10,8 @@ var questionDiv = document.getElementById("question-div");
 
 var timer = document.getElementById("timer");
 
-var endScreen = document.getElementById("end-screen");
-var endScore = document.getElementById("end-score");
+// var endScreen = document.getElementById("end-screen");
+// var endScore = document.getElementById("end-score");
 
 var qTxt = document.getElementById("q-text");
 var ansA = document.getElementById("ans-a");
@@ -141,7 +142,7 @@ function endGame() {
 	numLocalStorage = localStorage.length;
 	stopCountdown();
 	questionDiv.classList.add("hidden");
-	endScreen.classList.remove("hidden");
+	// endScreen.classList.remove("hidden");
 	var finalScore;
 	if (timeLeft < 0) {
 		finalScore = 0;
@@ -149,7 +150,7 @@ function endGame() {
 		finalScore = timeLeft;
 	}
 	timer.classList.add("hidden");
-	endScore.textContent = finalScore;
+	// endScore.textContent = finalScore;
 	var initials = prompt("Initials:");
 
 	timeLeft = 0;
@@ -187,7 +188,7 @@ function newScore(init, num) {
 
 function showScores() {
 	startScreen.classList.add("hidden");
-	endScreen.classList.add("hidden");
+	// endScreen.classList.add("hidden");
 	scoreScreen.classList.remove("hidden");
 }
 
@@ -200,7 +201,7 @@ function goHome() {
 	timeLeft = 59;
 	questionNum = 0;
 
-	timeDisplay.textContent = timeLeft;
+	timeDisplay.textContent = 60;
 }
 
 // countdown timer

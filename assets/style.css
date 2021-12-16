@@ -1,5 +1,5 @@
-/* wireframe
-* {
+/* wireframe */
+/* * {
 	border: solid 1px red;
 } */
 
@@ -11,14 +11,14 @@ p {
 	font-size: 1.2em;
 }
 
-/* main css */
+/* NEW CSS ================================================ */
 body {
-	margin: 0%;
 	background-color: hsl(0, 0%, 15%);
-	color: hsl(0, 0%, 80%);
+	color: hsl(0, 0%, 90%);
 	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+		"Lucida Sans Unicode", "Geneva", "Verdana", "sans-serif";
 }
+
 header {
 	background-color: hsl(0, 0%, 80%);
 	color: hsl(0, 0%, 15%);
@@ -26,37 +26,48 @@ header {
 	justify-content: space-between;
 }
 
-header button {
-	background-color: hsl(0, 0%, 50%);
-	color: hsl(0, 0%, 15%);
-	border: none;
-	padding: 15px 2%;
-}
-
 header div {
 	padding: 15px 2%;
 }
 
-/* maybe figure out flex */
-main {
-	padding: 200px 20%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+button {
+	background-color: hsl(0, 0%, 90%);
+	color: hsl(0, 0%, 10%);
+	padding: 10px 10px;
+	display: block;
+	border: none;
 }
 
 main h1 {
+	text-align: center;
+}
+main button {
+	border-radius: 10px;
+	margin: auto;
 	margin-top: 20px;
+}
+
+div button {
+	margin: 5px;
+	border-radius: 10px;
+}
+
+.display {
+	max-width: 500px;
+	margin: auto;
+	margin-top: 200px;
+}
+
+#q-text {
+	margin: 5px;
 	margin-bottom: 20px;
 }
 
-main button {
-	background-color: hsl(0, 0%, 50%);
-	color: hsl(0, 0%, 15%);
-	border: none;
-	padding: 15px;
+#score-list {
+	margin: 5px;
 }
 
+/* ACTIVE CSS ============================================= */
 .hidden {
 	display: none;
 }
@@ -84,11 +95,10 @@ main button {
 	}
 }
 
-
 .wrong-ans {
 	animation: fadeR 1s ease-in-out;
 }
 
-.correct-ans{
+.correct-ans {
 	animation: fadeG 1s ease-in-out;
 }
