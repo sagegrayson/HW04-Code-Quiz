@@ -1,5 +1,3 @@
-// Old Pseudo
-
 // PSEUDO =======================================
 // On webpage load
 // 		Build header with high score button and timer
