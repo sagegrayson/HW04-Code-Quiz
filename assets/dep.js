@@ -34,39 +34,3 @@
 // if the id is correct, show correct and button. if the id is incorrect, show incorrect and remove time. 
 // when next button is clicked, switch the question text and ids. 
 // once the current question reaches the end of the array, stop the timer and show the final time.
-
-
-
-{
-localStorage.setItem(
-    "Score" + numLocalStorage,
-    JSON.stringify({ initials: initials, score: finalScore })
-);
-showScores();
-addScore();
-}
-
-// add score
-function buildScore() {
-for (var i = 0; i < localStorage.length; i++) {
-    scores.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
-}
-}
-
-function addScore() {
-let c = localStorage.length;
-let initials = scores[c].initials;
-let score = scores[c].score;
-var entry = document.createElement("li");
-entry.textContent = initials + ": " + score;
-scoreList.appendChild(entry);
-}
-
-// show scores
-function showScores() {
-if (scores.length < 1) {
-    addScore();
-} else {
-}
-
-}
